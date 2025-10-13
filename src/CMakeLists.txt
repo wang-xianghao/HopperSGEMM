@@ -5,9 +5,6 @@ project(HopperSGEMM VERSION 0.0.1 LANGUAGES CXX CUDA)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Find CUDA Toolkit
-find_package(CUDAToolkit REQUIRED)
-
 # Provide information for Nsight Compute
 set(CMAKE_CUDA_FLAGS "${CMAKE_CUDA_FLAGS} -lineinfo")
 
@@ -20,6 +17,7 @@ add_library(
     hopper_sgemm
     SHARED
     hopper_sgemm.cu
+    hopper_sgemm_utils.cu
 )
 
 # Add the include directory of the library to the include directories of the project

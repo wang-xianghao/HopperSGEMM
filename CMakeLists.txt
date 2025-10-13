@@ -9,5 +9,5 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_subdirectory(src)
 
 # Build testing application
-add_executable(test_sgemm test_sgemm.cu)
+add_executable(test_sgemm test_sgemm.cpp)
 target_link_libraries(test_sgemm hopper_sgemm)
