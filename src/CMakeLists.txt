@@ -28,4 +28,4 @@ target_include_directories(hopper_sgemm PUBLIC ${HOPPER_SGEMM_INCLUDE_DIRS})
 # https://cmake.org/cmake/help/latest/prop_tgt/CUDA_ARCHITECTURES.html
 set_target_properties(hopper_sgemm PROPERTIES CUDA_ARCHITECTURES native)
 install(TARGETS hopper_sgemm DESTINATION lib)
-install(FILES ${CHOPPER_SGEMM_HEADERS} DESTINATION include)
+install(FILES ${HOPPER_SGEMM_HEADERS} DESTINATION include)
