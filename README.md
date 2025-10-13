@@ -8,3 +8,4 @@ TODO
 ## References
 1. Inside NVIDIA GPUs: Anatomy of high performance matmul kernels [https://www.aleksagordic.com/blog/matmul](https://www.aleksagordic.com/blog/matmul)
 
+2. Leimao's CUDA GEMM Optimization [https://github.com/leimao/CUDA-GEMM-Optimization](https://github.com/leimao/CUDA-GEMM-Optimization)
