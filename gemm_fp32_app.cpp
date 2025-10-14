@@ -70,7 +70,12 @@ int main()
     // Verify results
     constexpr float abs_tol{1.0e-3f};
     constexpr double rel_tol{0.0e-4f};
-    all_close(C_host, C_ref_host, m, n, ldc, abs_tol, rel_tol);
+    bool is_close = all_close(C_host, C_ref_host, m, n, ldc, abs_tol, rel_tol);
+
+    if (!is_close)
+    {
+        std::cout << "Terminated due to wrong results." << std::endl;
+    }
 
     // Run hopper gemm
     // hopper_gemm_fp32(stream, 0, 0, 0, 0, nullptr, 0, nullptr, 0, 0, nullptr,
