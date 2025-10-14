@@ -18,6 +18,8 @@ int main()
     constexpr float alpha{0.5f};
     constexpr float beta{0.5f};
 
+    print_device_info();
+
     // Allocate and initalize matrices on host
     float *A_host{nullptr}, *B_host{nullptr}, *C_host{nullptr},
         *C_ref_host{nullptr};

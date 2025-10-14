@@ -144,4 +144,39 @@ void print_performance(int m, int n, int k, float latency)
     std::cout << "Effective Bandwidth: " << bandwidth << " GB/s" << std::endl;
 }
 
+void print_device_info()
+{
+    int device_id{0};
+    cudaGetDevice(&device_id);
+    cudaDeviceProp device_prop;
+    cudaGetDeviceProperties(&device_prop, device_id);
+
+    std::cout << "Device Name: " << device_prop.name << std::endl;
+    // Memory specs
+    int memoryClockRate{0};
+    cudaDeviceGetAttribute(&memoryClockRate, cudaDevAttrMemoryClockRate,
+                           device_id);
+    const float memory_size{static_cast<float>(device_prop.totalGlobalMem) /
+                            (1 << 30)};
+    float const peak_bandwidth{static_cast<float>(
+        2.0f * memoryClockRate * (device_prop.memoryBusWidth / 8) / 1.0e6)};
+    std::cout << "Memory Size: " << memory_size << " GB" << std::endl;
+    std::cout << "Peak Bandwitdh: " << peak_bandwidth << " GB/s" << std::endl;
+    std::cout << "Bus Width: " << device_prop.memoryBusWidth << " Bit"
+              << std::endl;
+    // SM specs
+    std::cout << "SM Count: " << device_prop.multiProcessorCount << std::endl;
+    std::cout << "Maximum Blocks per SM: "
+              << device_prop.maxBlocksPerMultiProcessor << std::endl;
+    std::cout << "Maximum Threads per SM: "
+              << device_prop.maxThreadsPerMultiProcessor << std::endl;
+    std::cout << "Registers per SM: " << device_prop.regsPerMultiprocessor
+              << std::endl;
+    std::cout << "Shared Memory per SM: "
+              << device_prop.sharedMemPerMultiprocessor << " Bytes"
+              << std::endl;
+
+    std::cout << std::endl;
+}
+
 #endif // APP_UTILS_HPP
