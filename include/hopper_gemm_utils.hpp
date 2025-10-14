@@ -3,6 +3,8 @@
 
 #include <cuda_runtime.h>
 
+#define CEIL_DIV(a, b) (((a) + (b) - 1) / (b))
+
 #define CHECK_CUDA_ERROR(val) check_cuda((val), #val, __FILE__, __LINE__)
 void check_cuda(cudaError_t err, const char* const func, const char* const file,
                 const int line);
