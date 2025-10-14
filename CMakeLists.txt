@@ -12,5 +12,5 @@ find_package(CUDAToolkit REQUIRED)
 add_subdirectory(src)
 
 # Build testing application
-add_executable(test_sgemm test_sgemm.cpp)
-target_link_libraries(test_sgemm hopper_sgemm CUDA::cublas)
+add_executable(gemm_fp32_app gemm_fp32_app.cpp)
+target_link_libraries(gemm_fp32_app hopper_sgemm CUDA::cublas)
