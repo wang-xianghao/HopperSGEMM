@@ -70,16 +70,40 @@ int main()
     // Verify results
     constexpr float abs_tol{1.0e-3f};
     constexpr double rel_tol{0.0e-4f};
-    bool is_close = all_close(C_host, C_ref_host, m, n, ldc, abs_tol, rel_tol);
-
-    if (!is_close)
+    if (!all_close(C_host, C_ref_host, m, n, ldc, abs_tol, rel_tol))
     {
         std::cout << "Terminated due to wrong results." << std::endl;
+        std::exit(0);
     }
 
     // Run hopper gemm
-    // hopper_gemm_fp32(stream, 0, 0, 0, 0, nullptr, 0, nullptr, 0, 0, nullptr,
-    // 0);
+    constexpr int num_repeats{8};
+    float latency_cublas{0.0f}, latency_gemm{0.0f};
+    // Measure cublas latency
+    latency_cublas = measure_latency(
+        [&](cudaStream_t stream)
+        {
+            run_cublas_gemm(cublas_handle, m, n, k, alpha, A_device, lda,
+                            B_device, ldb, beta, C_ref_device, ldc);
+        },
+        stream, num_repeats);
+    // Measure hopper gemm latency
+    latency_gemm = measure_latency(
+        [&](cudaStream_t stream)
+        {
+            hopper_gemm_fp32(stream, m, n, k, alpha, A_device, lda, B_device,
+                             ldb, beta, C_device, ldc);
+        },
+        stream, num_repeats);
+
+    // Print performance results
+    std::cout << "cuBlas GEMM Performance" << std::endl;
+    print_performance<float>(m, n, k, latency_cublas);
+    std::cout << std::endl;
+
+    std::cout << "Hopper GEMM Performance" << std::endl;
+    print_performance<float>(m, n, k, latency_gemm);
+    std::cout << std::endl;
 
     return 0;
 }

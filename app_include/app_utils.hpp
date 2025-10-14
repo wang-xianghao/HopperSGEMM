@@ -47,7 +47,7 @@ void run_cublas_gemm(cublasHandle_t handle, int m, int n, int k, T alpha,
 }
 
 float measure_latency(std::function<void(cudaStream_t)> bound_function,
-                      int num_repeats, cudaStream_t stream)
+                      cudaStream_t stream, int num_repeats)
 {
     float latency;
 
@@ -116,6 +116,32 @@ bool all_close(T const* C, T const* C_ref, size_t m, size_t n, size_t ldc,
         }
     }
     return status;
+}
+
+template <typename T>
+float compute_effective_tflops(int m, int n, int k, float latency)
+{
+    float latency_seconds{latency * 1e-3f};
+    float num_flops{2.0f * m * n * k};
+    return num_flops / latency_seconds * 1e-12f;
+}
+
+template <typename T>
+float compute_effective_bandwidth(int m, int n, int k, float latency)
+{
+    float latency_seconds{latency * 1e-3f};
+    float num_bytes{(m * k + k * n + m * n) * sizeof(T) + .0f};
+    return num_bytes / latency * 1e-9f;
+}
+
+template <typename T>
+void print_performance(int m, int n, int k, float latency)
+{
+    float tflops = compute_effective_tflops<T>(m, n, k, latency);
+    float bandwidth = compute_effective_bandwidth<T>(m, n, k, latency);
+    std::cout << "Latency: " << latency << " ms" << std::endl;
+    std::cout << "Effective TFLOPS: " << tflops << " TFLOPS" << std::endl;
+    std::cout << "Effective Bandwidth: " << bandwidth << " GB/s" << std::endl;
 }
 
 #endif // APP_UTILS_HPP
