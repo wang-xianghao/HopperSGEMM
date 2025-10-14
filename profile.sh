@@ -1,3 +1,3 @@
-target=./build/test_sgemm
+target=./build/gemm_fp32_app
 
-ncu -f -o test_sgemm --import-source yes $target
+ncu -f -o gemm_fp32_app --import-source yes $target

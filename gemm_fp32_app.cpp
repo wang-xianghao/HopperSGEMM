@@ -1,8 +1,8 @@
 #include <cublas_v2.h>
 #include <iostream>
 
-#include "hopper_sgemm.hpp"
-#include "hopper_sgemm_utils.hpp"
+#include "hopper_gemm.hpp"
+#include "hopper_gemm_utils.hpp"
 
 #define CHECK_CUBLASS_ERROR(val) check_cublass((val), #val, __FILE__, __LINE__)
 void check_cublass(cublasStatus_t err, const char* const func,
@@ -45,8 +45,8 @@ int main()
     // Test and verify results
     // Run cublas
 
-    // Run hopper sgemm
-    hopper_sgemm(0, 0, 0, 0, nullptr, 0, nullptr, 0, 0, nullptr, 0);
+    // Run hopper gemm
+    hopper_gemm_fp32(0, 0, 0, 0, nullptr, 0, nullptr, 0, 0, nullptr, 0);
 
     return 0;
 }

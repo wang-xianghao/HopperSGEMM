@@ -1,5 +1,5 @@
-#ifndef HOPPER_SGEMM_UTILS_HPP
-#define HOPPER_SGEMM_UTILS_HPP
+#ifndef HOPPER_GEMM_UTILS_HPP
+#define HOPPER_GEMM_UTILS_HPP
 
 #include <cuda_runtime.h>
 
@@ -10,4 +10,4 @@ void check_cuda(cudaError_t err, const char* const func, const char* const file,
 #define CHECK_LAST_CUDA_ERROR() check_cuda_last(__FILE__, __LINE__)
 void check_cuda_last(const char* const file, const int line);
 
-#endif // HOPPER_SGEMM_UTILS_HPP
+#endif // HOPPER_GEMM_UTILS_HPP

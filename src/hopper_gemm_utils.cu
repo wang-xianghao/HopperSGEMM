@@ -2,7 +2,7 @@
 
 #include <cuda_runtime.h>
 
-#include "hopper_sgemm_utils.hpp"
+#include "hopper_gemm_utils.hpp"
 
 void check_cuda(cudaError_t err, const char* const func, const char* const file,
                 const int line)
