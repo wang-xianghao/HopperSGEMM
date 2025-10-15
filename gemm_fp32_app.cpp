@@ -7,6 +7,8 @@
 
 int main()
 {
+    constexpr int num_repeats{8};
+
     // Configure matrices
     constexpr int align_bytes{16};
     constexpr int m{4096};
@@ -79,7 +81,6 @@ int main()
     }
 
     // Run hopper gemm
-    constexpr int num_repeats{8};
     float latency_cublas{0.0f}, latency_gemm{0.0f};
     // Measure cublas latency
     latency_cublas = measure_latency(
