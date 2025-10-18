@@ -5,18 +5,16 @@
 #include "hopper_gemm.hpp"
 #include "hopper_gemm_utils.hpp"
 
-int main()
+int main(int argc, char* argv[])
 {
-    constexpr int num_repeats{8};
+    int m, n, k, num_repeats;
+    parse_command_arguments(&m, &n, &k, &num_repeats, argc, argv);
 
     // Configure matrices
     constexpr int align_bytes{16};
-    constexpr int m{4096};
-    constexpr int n{4096};
-    constexpr int k{4096};
-    constexpr int lda{CEIL_DIV(k, align_bytes) * align_bytes};
-    constexpr int ldb{CEIL_DIV(n, align_bytes) * align_bytes};
-    constexpr int ldc{CEIL_DIV(n, align_bytes) * align_bytes};
+    const int lda{CEIL_DIV(k, align_bytes) * align_bytes};
+    const int ldb{CEIL_DIV(n, align_bytes) * align_bytes};
+    const int ldc{CEIL_DIV(n, align_bytes) * align_bytes};
     constexpr float alpha{0.5f};
     constexpr float beta{0.5f};
 

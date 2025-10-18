@@ -4,7 +4,10 @@
 #include <cublas_v2.h>
 #include <cuda_runtime.h>
 #include <functional>
+#include <iostream>
 #include <random>
+#include <string>
+#include <vector>
 
 #include "hopper_gemm_utils.hpp"
 
@@ -177,6 +180,50 @@ void print_device_info()
               << std::endl;
 
     std::cout << std::endl;
+}
+
+void parse_command_arguments(int* m, int* n, int* k, int* num_repeats, int argc,
+                             char* argv[])
+{
+    std::string exec(argv[0]);
+    std::vector<std::string> args;
+    args.assign(argv + 1, argv + argc);
+    argc -= 1;
+
+    // Set default values
+    *m = 4096;
+    *n = 4096;
+    *k = 4096;
+    *num_repeats = 8;
+
+    for (int i = 0; i < argc - 1; ++i)
+    {
+        if (args[i] == "-m")
+        {
+            i += 1;
+            *m = std::stoi(args[i]);
+        }
+        else if (args[i] == "-n")
+        {
+            i += 1;
+            *n = std::stoi(args[i]);
+        }
+        else if (args[i] == "-k")
+        {
+            i += 1;
+            *k = std::stoi(args[i]);
+        }
+        else if (args[i] == "-r")
+        {
+            i += 1;
+            *num_repeats = std::stoi(args[i]);
+        }
+        else
+        {
+            fprintf(stderr, "%s [-m <m>] [-n <n>] [-k <k>] [-r <r>]\n");
+            std::exit(1);
+        }
+    }
 }
 
 #endif // APP_UTILS_HPP
